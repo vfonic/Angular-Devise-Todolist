@@ -1,25 +1,28 @@
 !!!
-%html
+%html{:lang => "en", "ng-app" => "AngularFirstClient"}
   %head
+    %meta{:charset => "utf-8"}
     %meta{:content => "width=device-width, initial-scale=1.0", :name => "viewport"}
-      %title= content_for?(:title) ? yield(:title) : "Angular First"
-      %meta{:content => content_for?(:description) ? yield(:description) : "Angular First", :name => "description"}
-        = stylesheet_link_tag "application", :media => "all"
-        = javascript_include_tag "application"
-        = csrf_meta_tags
-        = yield(:head)
-  %body{:class => "#{controller_name} #{action_name}"}
-    .navbar.navbar-fixed-top
-      %nav.navbar-inner
-        .container
-          = render 'layouts/navigation'
+    %title= content_for?(:title) ? yield(:title) : "AngularFirst"
+    = csrf_meta_tags
+    / Le HTML5 shim, for IE6-8 support of HTML elements
+    /[if lt IE 9]
+      <script src="http://html5shim.googlecode.com/svn/trunk/html5.js" type="text/javascript"></script>
+    = stylesheet_link_tag "application", media: "all"
+    = javascript_include_tag "application"
+    %meta#csrf{"." => "", "data-csrf" => form_authenticity_token, "ng-controller" => "CsrfCtrl"}/
+    / <link href="assets/favicon.ico" rel="shortcut icon">
+    %link{:href => "images/apple-touch-icon.png", :rel => "apple-touch-icon"}/
+    %link{:href => "images/apple-touch-icon-72x72.png", :rel => "apple-touch-icon", :sizes => "72x72"}/
+    %link{:href => "images/apple-touch-icon-114x114.png", :rel => "apple-touch-icon", :sizes => "114x114"}/
+  %body
+    = render 'layouts/navigation'
     #main{:role => "main"}
       .container
         .content
           .row
             .span12
               = render 'layouts/messages'
-              = yield
-          %footer
-      / ! end of .container
-    / ! end of #main
+              %div{"ng-view" => true}
+        %footer
+          %p &copy; Viktor Fonić 2013

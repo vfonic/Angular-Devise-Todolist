@@ -1,0 +1,26 @@
+root = global ? window
+angular = root.angular
+
+thisApp = angular.module("AngularFirstClient", ['ngCookies', 'tasks']).config(['$routeProvider', '$locationProvider' , 
+($routeProvider, $locationProvider) ->
+  #$locationProvider.hashPrefix('');
+  $locationProvider.html5Mode true
+  $routeProvider.when("/",
+    controller: "TasksIndexCtrl"
+    templateUrl: "<%= asset_path('tasks/index.html') %>"
+  ).when("/tasks", 
+    controller: TasksIndexCtrl
+    templateUrl: '<%= asset_path("tasks/index.html") %>'
+  ).when("/tasks/new",
+    controller: TasksCreateCtrl
+    templateUrl: '<%= asset_path("tasks/new.html") %>'
+  ).when("/tasks/:id",
+    controller: TasksShowCtrl
+    templateUrl: '<%= asset_path("tasks/show.html") %>'
+  ).when("/tasks/:id/edit",
+    controller: TasksEditCtrl
+    templateUrl: '<%= asset_path("tasks/edit.html") %>'
+  ).otherwise redirectTo: "/"
+])
+
+root.thisApp = thisApp

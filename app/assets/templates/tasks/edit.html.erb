@@ -1,0 +1,54 @@
+<form name="editTask">
+  <fieldset>
+    <legend>
+      Edit Task
+    </legend>
+      <div class="control-group">
+        <label class="control-label">
+          Title
+        </label>
+        <div class="controls">
+            <input type="text"
+                   name="task[title]"
+                   ng-model="task.title"
+                   class="text_field"
+                   required>
+          <span ng-show="editTask.title.$error.required"
+                class="help-inline">
+            Required
+          </span>
+        </div>
+      </div>
+      <div class="control-group">
+        <label class="control-label">
+          Priority
+        </label>
+        <div class="controls">
+            <input type="number"
+                   name="task[priority]"
+                   ng-model="task.priority"
+                   class="number_field"
+                   required>
+          <span ng-show="editTask.priority.$error.required"
+                class="help-inline">
+            Required
+          </span>
+        </div>
+      </div>
+    <div class="form-actions">
+      <button class="btn btn-success" ng-click="save()"
+        ng-disabled="isClean() || editTask.$invalid">
+        Save
+      </button>
+      <button ng-click="destroy()"
+              ng-show="task.id"
+              class="btn btn-danger">
+              <i class="icon-trash"></i>Delete
+      </button>
+      <a href="/tasks" class="btn">
+        Back to tasks
+      </a>
+    </div>
+  </fieldset>
+</form>
+
