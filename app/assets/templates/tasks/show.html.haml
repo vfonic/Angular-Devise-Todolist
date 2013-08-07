@@ -1,0 +1,18 @@
+%h1 Task
+%p
+  %b Title
+  %br/
+  {{task.title}}
+%p
+  %b Priority
+  %br/
+  {{task.priority}}
+.form-actions
+  %a.btn.btn-primary{:href => "/tasks/{{task.id}}/edit"}
+    %i.icon-edit
+    Edit Task
+  %button.btn.btn-danger{"ng-click" => "destroy()"}
+    %i.icon-trash
+    Delete
+  %a.btn{:href => "/tasks"}
+    Back to tasks

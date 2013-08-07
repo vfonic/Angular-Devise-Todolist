@@ -1,0 +1,26 @@
+%form{:name => "newTask"}
+  %fieldset
+    %legend
+      New Task
+    .control-group
+      %label.control-label
+        Title
+      .controls
+        %input.text_field{:name => "task[title]", "ng-model" => "task.title", :required => "", :type => "text"}
+        %span.help-inline{"ng-show" => "newTask.title.$error.required"}
+          Required
+    .control-group
+      %label.control-label
+        Priority
+      .controls
+        %input.number_field{:name => "task[priority]", "ng-model" => "task.priority", :required => "", :type => "number"}
+        %span.help-inline{"ng-show" => "newTask.priority.$error.required"}
+          Required
+    .form-actions
+      %button.btn.btn-success{"ng-click" => "save()", "ng-disabled" => "isClean() || newTask.$invalid"}
+        %i.icon-save
+        Save
+      %button.btn.btn-danger{"ng-click" => "destroy()", "ng-show" => "task.id"}
+        %i.icon-trash
+        Delete
+      %a.btn{:href => "/tasks"} Back to tasks
