@@ -1,25 +1,29 @@
 root = global ? window
 angular = root.angular
 
-thisApp = angular.module("AngularFirstClient", ['ngCookies', 'tasks']).config(['$routeProvider', '$locationProvider' , 
+thisApp = angular.module("AngularFirstClient", ['ngResource', 'ngCookies', 'tasks']).config(['$routeProvider', '$locationProvider' , 
 ($routeProvider, $locationProvider) ->
   #$locationProvider.hashPrefix('');
   $locationProvider.html5Mode true
-  $routeProvider.when("/",
-    controller: "TasksIndexCtrl"
-    templateUrl: "<%= asset_path('tasks/index.html') %>"
-  ).when("/tasks", 
+  $routeProvider
+  .when('/register',
+    controller: 'RegistrationsController'
+    templateUrl: '<%= asset_path "registrations/new.html" %>'
+  ).when('/login',
+    controller: 'SessionsController'
+    templateUrl: '<%= asset_path "sessions/new.html" %>'
+  ).when("/",
     controller: TasksIndexCtrl
-    templateUrl: '<%= asset_path("tasks/index.html") %>'
+    templateUrl: '<%= asset_path "tasks/index.html" %>'
   ).when("/tasks/new",
     controller: TasksCreateCtrl
-    templateUrl: '<%= asset_path("tasks/new.html") %>'
+    templateUrl: '<%= asset_path "tasks/new.html" %>'
   ).when("/tasks/:id",
     controller: TasksShowCtrl
-    templateUrl: '<%= asset_path("tasks/show.html") %>'
+    templateUrl: '<%= asset_path "tasks/show.html" %>'
   ).when("/tasks/:id/edit",
     controller: TasksEditCtrl
-    templateUrl: '<%= asset_path("tasks/edit.html") %>'
+    templateUrl: '<%= asset_path "tasks/edit.html" %>'
   ).otherwise redirectTo: "/"
 ])
 
