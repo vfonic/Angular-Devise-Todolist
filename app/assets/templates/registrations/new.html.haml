@@ -1,17 +1,17 @@
 %h1 Register
 %form{"ng-submit" => "register()"}
   .control-group
+    %label.control-label{:for => "name"} Name
+    .controls
+      %input#name{:name => "name", "ng-minlength" => "2", "ng-model" => "name", :placeholder => "Name", :required => "", :type => "text", autofocus: true}
+  .control-group
     %label.control-label{:for => "email"} Email
     .controls
-      %input#email{:name => "email", "ng-minlength" => "2", "ng-model" => "registration.email", :placeholder => "Email", :required => "", :type => "email"}
+      %input#email{:name => "email", "ng-minlength" => "2", "ng-model" => "email", :placeholder => "Email", :required => "", :type => "email"}
   .control-group
     %label.control-label{:for => "password"} Password
     .controls
-      %input#password{:name => "password", "ng-minlength" => "2", "ng-model" => "registration.password", "password-validate" => "", :placeholder => "Password", :required => "", :type => "password"}
-  .control-group
-    %label.control-label{:for => "password_confirmation"} Password
-    .controls
-      %input#password_confirmation{:name => "password_confirmation", "ng-minlength" => "2", "ng-model" => "registration.password_confirmation", "password-validate" => "", :placeholder => "Password", :required => "", :type => "password"}
+      %input#password{:name => "password", "ng-minlength" => "2", "ng-model" => "password", "password-validate" => "", :placeholder => "Password", :required => "", :type => "password"}
   .control-group
     .controls
-      %button.btn{:type => "submit"} Sign up
+      %button.btn{:type => "submit"} Register

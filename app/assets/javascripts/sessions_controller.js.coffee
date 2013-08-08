@@ -16,7 +16,7 @@ thisApp.controller 'SessionsCtrl', ($scope, $http, $location, FlashService, $roo
       $rootScope.current_user = data
       $("meta[name='current_user']").attr('content', JSON.stringify(data))
       $location.path "/tasks"
-      FlashService.clear()
+      FlashService.show("Welcome!")
     .error (data, status) ->
       FlashService.show(data['error'])
 
@@ -32,3 +32,19 @@ thisApp.controller 'SessionsCtrl', ($scope, $http, $location, FlashService, $roo
       FlashService.show(data)
     .error (data, status) ->
       FlashService.show("Error: #{status}.\n#{data}")
+
+  $scope.register = ->
+    registerData = {authenticity_token: "$cookieStore.get('XSRF-TOKEN')", user: {name: $scope.name, email: $scope.email, password: $scope.password, password_confirmation: $scope.password}}
+
+    $http(
+      method: "POST"
+      url: "/users"
+      data: registerData
+    )
+    .success (data) ->
+      $rootScope.current_user = data
+      $("meta[name='current_user']").attr('content', JSON.stringify(data))
+      $location.path "/tasks"
+      FlashService.show("Welcome!")
+    .error (data) ->
+      FlashService.show(data['error'])
