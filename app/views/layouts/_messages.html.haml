@@ -1,6 +1,5 @@
 / TODO: substitute with angular messages
-- flash.each do |name, msg|
-  - if msg.is_a?(String)
-    %div{:class => "alert alert-#{name == :notice ? "success" : "error"}"}
-      %a.close{"data-dismiss" => "alert"} ×
-      = content_tag :div, msg, :id => "flash_#{name}"
+%div{"ng-show" => "flash", :class => "alert"}
+  %a.close{"data-dismiss" => "alert"} ×
+  %div
+    {{ flash }}

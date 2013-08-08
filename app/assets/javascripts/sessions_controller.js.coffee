@@ -1,12 +1,10 @@
-thisApp.controller 'SessionsCtrl', ($scope, $http, $location) ->
-  $scope.current_user = JSON.parse($("meta[name='current_user']").attr('content'))
-  $scope.authErrors = []
+thisApp.controller 'SessionsCtrl', ($scope, $http, $location, FlashService, $rootScope) ->
+  $rootScope.current_user = JSON.parse($("meta[name='current_user']").attr('content'))
 
   $scope.authorized = ->
-    $scope.current_user? and $scope.current_user.id?
+    $rootScope.current_user? and $rootScope.current_user.id?
 
   $scope.login = ->
-    $scope.authErrors = []
     authData = {user: {email: $scope.email, password: $scope.password}}
 
     $http(
@@ -15,11 +13,12 @@ thisApp.controller 'SessionsCtrl', ($scope, $http, $location) ->
       data: authData
     )
     .success (data) ->
-      $scope.current_user = data
+      $rootScope.current_user = data
       $("meta[name='current_user']").attr('content', JSON.stringify(data))
       $location.path "/tasks"
+      FlashService.clear()
     .error (data, status) ->
-      $scope.authErrors = data['error']
+      FlashService.show(data['error'])
 
   $scope.logout = ->
     $http(
@@ -27,15 +26,10 @@ thisApp.controller 'SessionsCtrl', ($scope, $http, $location) ->
       url: "/logout"
     )
     .success (data) ->
-      $scope.current_user = null
+      $rootScope.current_user = null
       $("meta[name='current_user']").attr('content', "null")
       $location.path "/login"
+      FlashService.show(data)
     .error (data, status) ->
       alert("Error: #{status}.\n#{data}")
-
-# thisApp.run(($rootScope, $location) ->
-#   $rootScope.$on('$routeChangeStart', (event, next, current) ->
-#     if ($location.path() != '/login' and $location.path() != '/register' and !$scope.authorized())
-#         $location.path('/login')
-#   )
-# )
+      FlashService.clear()
