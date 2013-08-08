@@ -1,12 +1,11 @@
 class ApplicationController < ActionController::Base
-  before_filter :authenticate_user!
   protect_from_forgery
 
   after_filter  :set_csrf_cookie_for_ng
 
-  def after_sign_in_path_for(resource)
-    root_path
-  end
+  # def after_sign_in_path_for(resource)
+  #   root_path
+  # end
 
   def set_csrf_cookie_for_ng
     cookies['XSRF-TOKEN'] = form_authenticity_token if protect_against_forgery?

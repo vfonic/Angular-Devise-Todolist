@@ -7,12 +7,12 @@ thisApp = angular.module("AngularFirstClient", ['ngResource', 'ngCookies', 'task
   $locationProvider.html5Mode true
   $routeProvider
   .when('/register',
-    controller: 'SessionsCtrl'
+    controller: 'UsersCtrl'
     templateUrl: '<%= asset_path "registrations/new.html" %>'
   ).when('/login',
-    controller: 'SessionsCtrl'
+    controller: 'UsersCtrl'
     templateUrl: '<%= asset_path "sessions/new.html" %>'
-  ).when("/",
+  ).when("/tasks",
     controller: TasksIndexCtrl
     templateUrl: '<%= asset_path "tasks/index.html" %>'
   ).when("/tasks/new",
@@ -24,7 +24,16 @@ thisApp = angular.module("AngularFirstClient", ['ngResource', 'ngCookies', 'task
   ).when("/tasks/:id/edit",
     controller: TasksEditCtrl
     templateUrl: '<%= asset_path "tasks/edit.html" %>'
-  ).otherwise redirectTo: "/"
+  ).otherwise redirectTo: "/tasks"
 ])
+
+thisApp.run(($rootScope, $location) ->
+  $rootScope.$on('$routeChangeStart', (event, next, current) ->
+    if ($location.path() != '/login' && $location.path() != '/register' && !$rootScope.authorized())
+      $location.path('/register')
+    else if (($location.path() == '/login' || $location.path() == '/register') && $rootScope.authorized())
+      $location.path('/')
+  )
+)
 
 root.thisApp = thisApp
