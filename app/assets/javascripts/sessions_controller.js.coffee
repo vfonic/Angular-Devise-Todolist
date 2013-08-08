@@ -31,5 +31,4 @@ thisApp.controller 'SessionsCtrl', ($scope, $http, $location, FlashService, $roo
       $location.path "/login"
       FlashService.show(data)
     .error (data, status) ->
-      alert("Error: #{status}.\n#{data}")
-      FlashService.clear()
+      FlashService.show("Error: #{status}.\n#{data}")
