@@ -9,7 +9,9 @@
       .container.nav-collapse
         %ul.nav.pull-right
           %li{"ng-show" => "authorized()"}
-            %a{"href" => "#", "ng-click" => "logout()"} {{ current_user.email }} (Logout)
+            %a {{ current_user.email }}
+          %li{"ng-show" => "authorized()"}
+            %a{"href" => "#", "ng-click" => "logout()"} Logout
           %li{"ng-show" => "!authorized()"}
             %a{"href" => "/login"} Login
           %li{"ng-show" => "!authorized()"}
