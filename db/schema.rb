@@ -11,14 +11,16 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130808031009) do
+ActiveRecord::Schema.define(:version => 20130808031726) do
 
   create_table "tasks", :force => true do |t|
     t.string   "title"
     t.integer  "priority"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
+    t.datetime "created_at",   :null => false
+    t.datetime "updated_at",   :null => false
     t.integer  "user_id"
+    t.boolean  "completed"
+    t.datetime "completed_at"
   end
 
   add_index "tasks", ["priority"], :name => "index_tasks_on_priority"
