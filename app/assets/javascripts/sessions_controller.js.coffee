@@ -33,9 +33,9 @@ thisApp.controller 'SessionsCtrl', ($scope, $http, $location) ->
     .error (data, status) ->
       alert("Error: #{status}.\n#{data}")
 
-thisApp.run(($rootScope, $location) ->
-  $rootScope.$on('$routeChangeStart', (event, next, current) ->
-    # if ($location.path() !== '/login' && $location.path() !== '/register' && !$scope.authorized())
-        # $location.path('/login')
-  )
-)
+# thisApp.run(($rootScope, $location) ->
+#   $rootScope.$on('$routeChangeStart', (event, next, current) ->
+#     if ($location.path() != '/login' and $location.path() != '/register' and !$scope.authorized())
+#         $location.path('/login')
+#   )
+# )
