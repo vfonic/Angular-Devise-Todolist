@@ -1,7 +1,7 @@
 class TasksController < ApplicationController
   # before_filter :authenticate_user!
   def index
-    @tasks = Task.all
+    @tasks = current_user.tasks
 
     respond_to do |format|
       format.html { render nothing: true, layout: true }
@@ -10,7 +10,7 @@ class TasksController < ApplicationController
   end
 
   def show
-    @task = Task.find(params[:id])
+    @task = current_user.tasks.find(params[:id])
 
     respond_to do |format|
       format.html { render nothing: true, layout: true }
@@ -28,12 +28,13 @@ class TasksController < ApplicationController
   end
 
   def edit
-    @task = Task.find(params[:id])
+    @task = current_user.tasks.find(params[:id])
     render nothing: true, layout: true
   end
 
   def create
     @task = Task.new(params[:task])
+    @task.user = current_user
 
     respond_to do |format|
       if @task.save
@@ -47,7 +48,7 @@ class TasksController < ApplicationController
   end
 
   def update
-    @task = Task.find(params[:id])
+    @task = current_user.tasks.find(params[:id])
 
     respond_to do |format|
       if @task.update_attributes(params[:task])
@@ -61,7 +62,7 @@ class TasksController < ApplicationController
   end
 
   def destroy
-    @task = Task.find(params[:id])
+    @task = current_user.tasks.find(params[:id])
     @task.destroy
     head :no_content
   end
