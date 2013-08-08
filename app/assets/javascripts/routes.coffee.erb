@@ -3,7 +3,6 @@ angular = root.angular
 
 thisApp = angular.module("AngularFirstClient", ['ngResource', 'ngCookies', 'tasks']).config(['$routeProvider', '$locationProvider' , 
 ($routeProvider, $locationProvider) ->
-  #$locationProvider.hashPrefix('');
   $locationProvider.html5Mode true
   $routeProvider
   .when('/register',

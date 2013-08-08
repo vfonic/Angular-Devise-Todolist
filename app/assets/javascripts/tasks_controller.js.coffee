@@ -1,4 +1,3 @@
-
 root = global ? window
 
 TasksIndexCtrl = ($scope, Task) ->
