@@ -10,7 +10,7 @@ thisApp = angular.module("AngularFirstClient", ['ngResource', 'ngCookies', 'task
     controller: 'RegistrationsController'
     templateUrl: '<%= asset_path "registrations/new.html" %>'
   ).when('/login',
-    controller: 'SessionsController'
+    controller: 'SessionsCtrl'
     templateUrl: '<%= asset_path "sessions/new.html" %>'
   ).when("/",
     controller: TasksIndexCtrl
