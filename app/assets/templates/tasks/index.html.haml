@@ -1,25 +1,19 @@
 %h1 Tasks
-%table.table.table-striped
-  %thead
-    %tr
-      %th Title
-      %th Priority
-      %th Actions
-  %tbody
-    %tr{"ng-repeat" => "task in tasks | orderBy:'priority'"}
-      %td
-        %a{:href => "/tasks/{{task.id}}"}
-          {{task.title}}
-      %td
-        {{task.priority}}
-      %td
-        %a.btn.btn-primary{:href => "/tasks/{{task.id}}/edit"}
+.container
+  %ul.tasklist.nav
+    %li{"ng-repeat" => "task in tasks | orderBy:['completed_at', 'priority']"}
+      %a{:href => "/tasks/{{task.id}}"}
+        {{task.title}}
+      %span
+        %button.btn.btn-primary{:href => "/tasks/{{task.id}}/edit"}
           %i.icon-edit
-          Edit
         %button.btn.btn-danger{"ng-click" => "destroy()"}
           %i.icon-trash
-          Delete
-%p
-  %a.btn.btn-primary{:href => "/tasks/new"}
-    %i.icon-plus
-    New
+  %form{:name => "newTask", class: "form-horizontal", "ng-controller" => "TasksCreateCtrl"}
+    %fieldset
+      %input.text_field{:name => "task[title]", "ng-model" => "task.title", :required => "", :type => "text"}
+      %span.help-inline{"ng-show" => "newTask.title.$error.required"}
+        Required
+      %button.btn.btn-success{"ng-click" => "save()", "ng-disabled" => "isClean() || newTask.$invalid"}
+        %i.icon-plus
+        Add
