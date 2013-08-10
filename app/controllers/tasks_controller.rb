@@ -9,18 +9,14 @@ class TasksController < ApplicationController
       (@task.priority == @tasks.count - 1 and params[:direction] = :down)
       head :no_content
     else
-      begin
-        deltaPriority = params[:direction] == :up ? -1 : 1;
-        priority = @task.priority + deltaPriority
-        @higherTask = @tasks.where(priority: priority).first
-        Task.transaction do
-          @higherTask.update_attributes!(priority: @task.priority)
-          @task.update_attributes!(priority: priority)
-        end
-        head :no_content
-      rescue ActiveRecord::RecordInvalid => invalid
-        render json: {error: @task.errors, error: @higherTask.errors}, status: :unprocessable_entity
+      deltaPriority = params[:direction] == :up ? -1 : 1;
+      priority = @task.priority + deltaPriority
+      @higherTask = @tasks.where(priority: priority).first
+      Task.transaction do
+        @higherTask.update_attribute(:priority, @task.priority)
+        @task.update_attribute(:priority, priority)
       end
+      head :no_content
     end
   end
 
