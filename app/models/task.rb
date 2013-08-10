@@ -4,7 +4,7 @@ class Task < ActiveRecord::Base
   # TODO show error message when field empty
   validates_presence_of :title
 
-  scope :prioritized, order("completed_at, priority")
+  scope :prioritized, order("priority, completed_at DESC")
 
   belongs_to :user
 

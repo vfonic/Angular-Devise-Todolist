@@ -1,7 +1,7 @@
-%h1 Tasks
-.container
+.span6
+  %h1 Tasks
   %ul.tasklist.nav
-    %li{"ng-repeat" => "task in tasks | orderBy:['completed_at', 'priority']", "ng-mouseenter" => "showControls = true", "ng-mouseleave" => "showControls = false"}
+    %li{"ng-repeat" => "task in tasks | filter:{completed: false} | orderBy:['priority']", "ng-mouseenter" => "showControls = true", "ng-mouseleave" => "showControls = false"}
       %a{:href => "/tasks/{{task.id}}"}
         {{task.title}}
       %span{"ng-show" => "showControls"}
@@ -13,6 +13,7 @@
           %i.icon-edit
         %button.btn.btn-danger.btn-mini{"ng-click" => "destroy()"}
           %i.icon-trash
+
   %form{:name => "newTask", class: "form-horizontal", "ng-controller" => "TasksCreateCtrl"}
     %fieldset
       %input.text_field{:name => "task[title]", "ng-model" => "task.title", :required => "", :type => "text"}
@@ -21,3 +22,14 @@
       %button.btn.btn-success{"ng-click" => "save()", "ng-disabled" => "isClean() || newTask.$invalid"}
         %i.icon-plus.icon-white
         Add
+.span6
+  %h2 Finished tasks
+  %ul.tasklist.nav
+    %li.completed{"ng-repeat" => "task in tasks | filter:{completed: true} | orderBy:['-completed_at']", "ng-mouseenter" => "showControls = true", "ng-mouseleave" => "showControls = false"}
+      %a{:href => "/tasks/{{task.id}}"}
+        {{task.title}}
+      %span{"ng-show" => "showControls"}
+        %a.btn.btn-mini{:href => "/tasks/{{task.id}}/edit"}
+          %i.icon-edit
+        %button.btn.btn-danger.btn-mini{"ng-click" => "destroy()"}
+          %i.icon-trash
