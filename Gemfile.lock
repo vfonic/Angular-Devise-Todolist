@@ -59,6 +59,9 @@ GEM
     figaro (0.7.0)
       bundler (~> 1.0)
       rails (>= 3, < 5)
+    font_awesome_rails (0.0.4)
+      activesupport (>= 3.1.0)
+      sass (>= 3.2.0)
     haml (4.0.3)
       tilt
     haml-rails (0.4)
@@ -156,6 +159,7 @@ DEPENDENCIES
   coffee-rails (~> 3.2.1)
   devise
   figaro
+  font_awesome_rails
   haml-rails
   html2haml
   jquery-rails

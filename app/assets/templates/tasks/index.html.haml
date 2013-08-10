@@ -2,9 +2,9 @@
   %h1 Tasks
   %ul.tasklist.nav
     %li{"ng-repeat" => "task in tasks | filter:{completed: false} | orderBy:['priority']", "ng-mouseenter" => "showControls = true", "ng-mouseleave" => "showControls = false"}
-      %a{:href => "/tasks/{{task.id}}"}
+      %a.uncompleted{:href => "/tasks/{{task.id}}"}
         {{task.title}}
-      %span{"ng-show" => "showControls"}
+      %span.controls{"ng-show" => "showControls"}
         %button.btn.btn-link.btn-mini{"ng-click" => "up(task)"}
           %i.icon-arrow-up{"inverts-icon-color-when-hovered" => true}
         %button.btn.btn-link.btn-mini{"ng-click" => "down(task)"}
@@ -25,10 +25,10 @@
 .span6
   %h2 Finished tasks
   %ul.tasklist.nav
-    %li.completed{"ng-repeat" => "task in tasks | filter:{completed: true} | orderBy:['-completed_at']", "ng-mouseenter" => "showControls = true", "ng-mouseleave" => "showControls = false"}
-      %a{:href => "/tasks/{{task.id}}"}
+    %li{"ng-repeat" => "task in tasks | filter:{completed: true} | orderBy:['-completed_at']", "ng-mouseenter" => "showControls = true", "ng-mouseleave" => "showControls = false"}
+      %a.completed{:href => "/tasks/{{task.id}}"}
         {{task.title}}
-      %span{"ng-show" => "showControls"}
+      %span.controls{"ng-show" => "showControls"}
         %a.btn.btn-mini{:href => "/tasks/{{task.id}}/edit"}
           %i.icon-edit
         %button.btn.btn-danger.btn-mini{"ng-click" => "destroy()"}

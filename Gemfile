@@ -21,3 +21,4 @@ group :development do
 end
 
 gem 'angularjs_scaffold'
+gem 'font_awesome_rails'

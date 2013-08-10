@@ -1,3 +1,4 @@
+@import "font-awesome";
 @import "bootstrap_variables";
 @import "bootstrap";
 body { padding-top: 50px; }
@@ -5,12 +6,11 @@ body { padding-top: 50px; }
 
 .tasklist {
     width: 320px;
-    list-style: none;
     li {
         margin: 2px;
         position: relative;
         border: 1px solid #e5e5e5;
-        span {
+        .controls {
             position: absolute;
             right: 0;
             top: 0;
@@ -19,16 +19,25 @@ body { padding-top: 50px; }
             margin: 0;
             padding: 5px 5px 5px 15px;
             display: block;
+            &.completed {
+                @include icon(check);
+            }
+            &.uncompleted {
+                @include icon(check-empty);
+            }
         }
     }
 }
 
 .tasklist span a, 
 .tasklist span button {
-    margin-top: 3px;
+    margin-top: 4px;
     margin-right: 3px;
 }
 
-.completed {
-    text-decoration: line-through
+.completed,
+.completed:focus,
+.completed:active,
+.completed:hover {
+    text-decoration: line-through !important;
 }
