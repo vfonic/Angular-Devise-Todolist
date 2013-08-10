@@ -1,14 +1,14 @@
 %h1 Tasks
 .container
   %ul.tasklist.nav
-    %li{"ng-repeat" => "task in tasks | orderBy:['completed_at', 'priority']"}
+    %li{"ng-repeat" => "task in tasks | orderBy:['completed_at', 'priority']", "ng-mouseenter" => "showControls = true", "ng-mouseleave" => "showControls = false"}
       %a{:href => "/tasks/{{task.id}}"}
         {{task.title}}
-      %span
-        %button.btn-link.btn-mini{"ng-click" => "up(task)"}
-          %i.icon-arrow-up
-        %button.btn-link.btn-mini{"ng-click" => "down(task)"}
-          %i.icon-arrow-down
+      %span{"ng-show" => "showControls"}
+        %button.btn.btn-link.btn-mini{"ng-click" => "up(task)"}
+          %i.icon-arrow-up{"inverts-icon-color-when-hovered" => true}
+        %button.btn.btn-link.btn-mini{"ng-click" => "down(task)"}
+          %i.icon-arrow-down{"inverts-icon-color-when-hovered" => true}
         %a.btn.btn-mini{:href => "/tasks/{{task.id}}/edit"}
           %i.icon-edit
         %button.btn.btn-danger.btn-mini{"ng-click" => "destroy()"}
