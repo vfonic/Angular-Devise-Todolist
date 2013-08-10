@@ -5,9 +5,13 @@
       %a{:href => "/tasks/{{task.id}}"}
         {{task.title}}
       %span
-        %button.btn.btn-primary{:href => "/tasks/{{task.id}}/edit"}
+        %button.btn-link.btn-mini{"ng-click" => "up(task)"}
+          %i.icon-arrow-up
+        %button.btn-link.btn-mini{"ng-click" => "down(task)"}
+          %i.icon-arrow-down
+        %a.btn.btn-mini{:href => "/tasks/{{task.id}}/edit"}
           %i.icon-edit
-        %button.btn.btn-danger{"ng-click" => "destroy()"}
+        %button.btn.btn-danger.btn-mini{"ng-click" => "destroy()"}
           %i.icon-trash
   %form{:name => "newTask", class: "form-horizontal", "ng-controller" => "TasksCreateCtrl"}
     %fieldset
@@ -15,5 +19,5 @@
       %span.help-inline{"ng-show" => "newTask.title.$error.required"}
         Required
       %button.btn.btn-success{"ng-click" => "save()", "ng-disabled" => "isClean() || newTask.$invalid"}
-        %i.icon-plus
+        %i.icon-plus.icon-white
         Add

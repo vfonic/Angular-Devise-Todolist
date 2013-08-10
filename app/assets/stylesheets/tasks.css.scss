@@ -1,11 +1,9 @@
-$iconSpritePath: '';
-$iconWhiteSpritePath: '';
 @import "bootstrap_variables";
 @import "bootstrap";
 body { padding-top: 50px; }
 @import "bootstrap-responsive";
 
-.tasklist.nav {
+.tasklist {
     width: 320px;
     list-style: none;
     li {
@@ -22,5 +20,14 @@ body { padding-top: 50px; }
             padding: 5px 5px 5px 15px;
             display: block;
         }
+    }
+}
+
+.tasklist span a, 
+.tasklist span button {
+    margin-top: 3px;
+    margin-right: 3px;
+    &.btn-link{
+        padding: 0;
     }
 }

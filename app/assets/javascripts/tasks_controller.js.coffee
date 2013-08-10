@@ -1,13 +1,25 @@
 root = global ? window
 
 TasksIndexCtrl = ($scope, Task) ->
-  $scope.tasks = Task.query()
+  $scope.tasks = Task.query() || {}
 
   $scope.destroy = ->
     if confirm("Are you sure?")
       original = @task
       @task.destroy ->
         $scope.tasks = _.without($scope.tasks, original)
+  $scope.up = ->
+    return if _.indexOf($scope.tasks, @task) == 0
+    higherTask = $scope.tasks[_.indexOf($scope.tasks, @task)-1]
+    higherTask.priority++
+    @task.priority--
+    # todo: make this one query
+    # todo: update after the query
+    # todo: swap array elements
+    # todo: if it's the last one ignore
+    # todo: ignore everything server-side
+    Task.update @task
+    Task.update higherTask
         
 TasksIndexCtrl.$inject = ['$scope', 'Task'];
 

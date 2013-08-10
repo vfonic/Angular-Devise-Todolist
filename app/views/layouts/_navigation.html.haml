@@ -1,4 +1,4 @@
-.navbar.navbar-fixed-top{"ng-controller"=>"UsersCtrl"}
+%header.navbar.navbar-fixed-top{"ng-controller"=>"UsersCtrl"}
   %nav.navbar-inner
     .container
       = link_to "Angular First", root_path, :class => 'brand'
@@ -7,12 +7,11 @@
         %span.icon-bar
         %span.icon-bar
       .container.nav-collapse
-        %ul.nav.pull-right
-          %li{"ng-show" => "authorized()"}
-            %a {{ current_user.email }}
-          %li{"ng-show" => "authorized()"}
-            %a{"href" => "#", "ng-click" => "logout()"} Logout
-          %li{"ng-show" => "!authorized()"}
-            %a{"href" => "/login"} Login
-          %li{"ng-show" => "!authorized()"}
-            %a{"href" => "/register"} Register
+        .control-links{"ng-show" => "authorized()"}
+          {{ current_user.name }}
+          |
+          %a{"href" => "#", "ng-click" => "logout()"} Logout
+        .control-links{"ng-show" => "!authorized()"}
+          %a{"href" => "/login"} Login
+          |
+          %a{"href" => "/register"} Register
