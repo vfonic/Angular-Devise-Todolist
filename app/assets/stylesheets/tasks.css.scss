@@ -1,8 +1,12 @@
-// Place all the styles related to the Tasks controller here.
-// They will automatically be included in application.css.
-// You can use Sass (SCSS) here: http://sass-lang.com/
+$iconSpritePath: '';
+$iconWhiteSpritePath: '';
+@import "bootstrap_variables";
+@import "bootstrap";
+body { padding-top: 50px; }
+@import "bootstrap-responsive";
+
 .tasklist.nav {
-    width: 200px;
+    width: 320px;
     list-style: none;
     li {
         margin: 2px;
@@ -13,21 +17,10 @@
             right: 0;
             top: 0;
         }
-        a {
+        > a {
             margin: 0;
             padding: 5px 5px 5px 15px;
             display: block;
         }
-    }
-}
-.tasklista.nav li {
-    width: 50%;
-    margin: 2px;
-    list-style: none;
-    border: 1px solid #e5e5e5;
-    a {
-        margin: 0;
-        padding: 5px 5px 5px 15px;
-        display: block;
     }
 }
