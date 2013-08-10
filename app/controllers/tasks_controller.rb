@@ -1,5 +1,29 @@
 class TasksController < ApplicationController
   before_filter :authenticate_user!
+
+  def up_down
+    @tasks = current_user.tasks.scoped.prioritized
+    @task = @tasks.find(params[:task_id])
+
+    if (@task.priority == 0 and params[:direction] == :up) or
+      (@task.priority == @tasks.count - 1 and params[:direction] = :down)
+      head :no_content
+    else
+      begin
+        deltaPriority = params[:direction] == :up ? -1 : 1;
+        priority = @task.priority + deltaPriority
+        @higherTask = @tasks.where(priority: priority).first
+        Task.transaction do
+          @higherTask.update_attributes!(priority: @task.priority)
+          @task.update_attributes!(priority: priority)
+        end
+        head :no_content
+      rescue ActiveRecord::RecordInvalid => invalid
+        render json: {error: @task.errors, error: @higherTask.errors}, status: :unprocessable_entity
+      end
+    end
+  end
+
   def index
     @tasks = current_user.tasks.scoped.prioritized
 

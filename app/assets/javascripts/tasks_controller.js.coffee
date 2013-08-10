@@ -1,5 +1,11 @@
 root = global ? window
 
+swap = (array, first_index, second_index) ->
+  tmp = array[first_index]
+  array[first_index] = array[second_index]
+  array[second_index] = tmp
+  return array
+
 TasksIndexCtrl = ($scope, Task) ->
   $scope.tasks = Task.query() || {}
 
@@ -9,17 +15,25 @@ TasksIndexCtrl = ($scope, Task) ->
       @task.destroy ->
         $scope.tasks = _.without($scope.tasks, original)
   $scope.up = ->
-    return if _.indexOf($scope.tasks, @task) == 0
-    higherTask = $scope.tasks[_.indexOf($scope.tasks, @task)-1]
-    higherTask.priority++
-    @task.priority--
-    # todo: make this one query
-    # todo: update after the query
-    # todo: swap array elements
-    # todo: if it's the last one ignore
-    # todo: ignore everything server-side
-    Task.update @task
-    Task.update higherTask
+    indexOfTask = _.indexOf($scope.tasks, @task)
+    return if indexOfTask == 0
+    higherTask = $scope.tasks[indexOfTask-1]
+    task = @task
+
+    @task.up ->
+      higherTask.priority++
+      task.priority--
+      swap($scope.tasks, indexOfTask, indexOfTask-1)
+  $scope.down = ->
+    indexOfTask = _.indexOf($scope.tasks, @task)
+    return if indexOfTask == $scope.tasks.length - 1
+    lowerTask = $scope.tasks[indexOfTask+1]
+    task = @task
+
+    @task.down ->
+      lowerTask.priority--
+      task.priority++
+      swap($scope.tasks, indexOfTask, indexOfTask+1)
         
 TasksIndexCtrl.$inject = ['$scope', 'Task'];
 

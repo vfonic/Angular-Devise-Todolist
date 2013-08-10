@@ -9,7 +9,22 @@ angular.module("tasks", ["ngResource"]).factory "Task", ['$resource', ($resource
 
     destroy:
       method: "DELETE"
+
+    up:
+      method: "PUT"
+    down:
+      method: "PUT"
   )
+  Task::up = (cb) ->
+    Task.up
+      id: "up"
+      task_id: @id
+    , cb
+  Task::down = (cb) ->
+    Task.down
+      id: "down"
+      task_id: @id
+    , cb
   Task::destroy = (cb) ->
     Task.remove
       id: @id
