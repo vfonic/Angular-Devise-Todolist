@@ -2,21 +2,37 @@ class TasksController < ApplicationController
   before_filter :authenticate_user!
 
   def up_down
-    @tasks = current_user.tasks.scoped.prioritized
-    @task = @tasks.find(params[:task_id])
+    @tasks = current_user.tasks.scoped.uncompleted.prioritized
+    task_index = @tasks.index { |task| task.id == params[:id].to_i }
+    @task = @tasks[task_index]
 
-    if (@task.priority == 0 and params[:direction] == :up) or
-      (@task.priority == @tasks.count - 1 and params[:direction] = :down)
+    if (task_index == 0 and params[:direction] == "up") or
+      (task_index == @tasks.size - 1 and params[:direction] = "down")
       head :no_content
     else
-      deltaPriority = params[:direction] == :up ? -1 : 1;
-      priority = @task.priority + deltaPriority
-      @higherTask = @tasks.where(priority: priority).first
+      delta_direction = params[:direction] == "up" ? -1 : 1;
+      @higherTask = @tasks[task_index + delta_direction]
+      priority = @higherTask.priority
       Task.transaction do
         @higherTask.update_attribute(:priority, @task.priority)
         @task.update_attribute(:priority, priority)
       end
       head :no_content
+    end
+  end
+
+  def complete
+    @task = current_user.tasks.find(params[:id])
+    @task.completed = params[:completed]
+
+    respond_to do |format|
+      if @task.save
+        format.html { redirect_to @task, notice: 'Task was successfully updated.' }
+        format.json { render json: @task, status: :ok }
+      else
+        format.html { render action: "edit" }
+        format.json { render json: @task.errors, status: :unprocessable_entity }
+      end
     end
   end
 
@@ -55,11 +71,12 @@ class TasksController < ApplicationController
   def create
     @task = Task.new(params[:task])
     @task.user = current_user
+    @task.priority = Task.maximum(:id).next
 
     respond_to do |format|
       if @task.save
         format.html { redirect_to @task, notice: 'Task was successfully created.' }
-        format.json { render json: @task, status: :created, location: @task }
+        format.json { render json: @task, status: :created }
       else
         format.html { render action: "new" }
         format.json { render json: @task.errors, status: :unprocessable_entity }

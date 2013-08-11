@@ -7,41 +7,50 @@ swap = (array, first_index, second_index) ->
   return array
 
 TasksIndexCtrl = ($scope, Task) ->
-  $scope.tasks = Task.query() || {}
+  $scope.tasks = Task.query()
+
+  $scope.save = ->
+    Task.save @task, (task) ->
+      $scope.tasks.push(task)
+      $scope.task.title = ""
+
+  $scope.up = ->
+    # indexOfTask = _.indexOf($scope.tasks, @task)
+    # return if indexOfTask == 0
+    # higherTask = $scope.tasks[indexOfTask-1]
+    # task = @task
+
+    @task.up ->
+      # higherTask.priority++
+      # task.priority--
+      # swap($scope.tasks, indexOfTask, indexOfTask-1)
+  $scope.down = ->
+    # indexOfTask = _.indexOf($scope.tasks, @task)
+    # return if indexOfTask == $scope.tasks.length - 1
+    # lowerTask = $scope.tasks[indexOfTask+1]
+    task = @task
+
+    @task.down ->
+      # lowerTask.priority--
+      # task.priority++
+      # swap($scope.tasks, indexOfTask, indexOfTask+1)
 
   $scope.destroy = ->
     if confirm("Are you sure?")
       original = @task
       @task.destroy ->
         $scope.tasks = _.without($scope.tasks, original)
-  $scope.up = ->
-    indexOfTask = _.indexOf($scope.tasks, @task)
-    return if indexOfTask == 0
-    higherTask = $scope.tasks[indexOfTask-1]
-    task = @task
-
-    @task.up ->
-      higherTask.priority++
-      task.priority--
-      swap($scope.tasks, indexOfTask, indexOfTask-1)
-  $scope.down = ->
-    indexOfTask = _.indexOf($scope.tasks, @task)
-    return if indexOfTask == $scope.tasks.length - 1
-    lowerTask = $scope.tasks[indexOfTask+1]
-    task = @task
-
-    @task.down ->
-      lowerTask.priority--
-      task.priority++
-      swap($scope.tasks, indexOfTask, indexOfTask+1)
 
   $scope.complete = ->
-    @task.completed = true
+    original = @task
     @task.complete ->
+      original.completed = true
 
   $scope.uncomplete = ->
-    @task.completed = false
+    original = @task
     @task.uncomplete ->
+      # TODO change this with setting received task from server
+      original.completed = false
         
 TasksIndexCtrl.$inject = ['$scope', 'Task'];
 

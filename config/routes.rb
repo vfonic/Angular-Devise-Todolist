@@ -1,7 +1,8 @@
 AngularFirst::Application.routes.draw do
 
-  put "/tasks/up" => "tasks#up_down", defaults: { direction: :up }
-  put "/tasks/down" => "tasks#up_down", defaults: { direction: :down }
+  put "/tasks/:id/complete" => "tasks#complete"
+  put "/tasks/:id/:direction" => "tasks#up_down"
+  put "/tasks/:id/:direction" => "tasks#up_down"
   resources :tasks
 
   devise_for :users, skip: [:sessions, :registrations, :password]

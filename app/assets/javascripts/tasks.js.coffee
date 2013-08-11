@@ -1,8 +1,9 @@
 root = global ? window
 
 angular.module("tasks", ["ngResource"]).factory "Task", ['$resource', ($resource) ->
-  Task = $resource("/tasks/:id",
+  Task = $resource("/tasks/:id/:action",
     id: "@id"
+    action: "@action"
   ,
     update:
       method: "PUT"
@@ -12,25 +13,31 @@ angular.module("tasks", ["ngResource"]).factory "Task", ['$resource', ($resource
 
     up:
       method: "PUT"
+      params:
+        action: "up"
     down:
       method: "PUT"
+      params:
+        action: "down"
+    complete:
+      method: "PUT"
+      params:
+        action: "complete"
   )
   Task::up = (cb) ->
     Task.up
-      id: "up"
-      task_id: @id
+      id: @id
     , cb
   Task::down = (cb) ->
     Task.down
-      id: "down"
-      task_id: @id
+      id: @id
     , cb
   Task::destroy = (cb) ->
     Task.remove
       id: @id
     , cb
   Task::complete = (cb) ->
-    Task.update
+    Task.complete
       id: @id
       completed: true
     , cb
