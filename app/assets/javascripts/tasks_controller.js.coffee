@@ -34,6 +34,14 @@ TasksIndexCtrl = ($scope, Task) ->
       lowerTask.priority--
       task.priority++
       swap($scope.tasks, indexOfTask, indexOfTask+1)
+
+  $scope.complete = ->
+    @task.completed = true
+    @task.complete ->
+
+  $scope.uncomplete = ->
+    @task.completed = false
+    @task.uncomplete ->
         
 TasksIndexCtrl.$inject = ['$scope', 'Task'];
 
