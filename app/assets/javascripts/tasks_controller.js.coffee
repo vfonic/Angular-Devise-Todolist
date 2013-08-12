@@ -15,25 +15,27 @@ TasksIndexCtrl = ($scope, Task) ->
       $scope.task.title = ""
 
   $scope.up = ->
-    # indexOfTask = _.indexOf($scope.tasks, @task)
-    # return if indexOfTask == 0
-    # higherTask = $scope.tasks[indexOfTask-1]
-    # task = @task
+    indexOfTask = _.indexOf($scope.tasks, @task)
+    return if indexOfTask == 0
+    higherTask = $scope.tasks[indexOfTask-1]
+    task = @task
 
     @task.up ->
-      # higherTask.priority++
-      # task.priority--
-      # swap($scope.tasks, indexOfTask, indexOfTask-1)
+      priority = higherTask.priority
+      higherTask.priority = task.priority
+      task.priority = priority
+      swap($scope.tasks, indexOfTask, indexOfTask-1)
   $scope.down = ->
-    # indexOfTask = _.indexOf($scope.tasks, @task)
-    # return if indexOfTask == $scope.tasks.length - 1
-    # lowerTask = $scope.tasks[indexOfTask+1]
+    indexOfTask = _.indexOf($scope.tasks, @task)
+    return if indexOfTask == $scope.tasks.length - 1
+    lowerTask = $scope.tasks[indexOfTask+1]
     task = @task
 
     @task.down ->
-      # lowerTask.priority--
-      # task.priority++
-      # swap($scope.tasks, indexOfTask, indexOfTask+1)
+      priority = lowerTask.priority
+      lowerTask.priority = task.priority
+      task.priority = priority
+      swap($scope.tasks, indexOfTask, indexOfTask+1)
 
   $scope.destroy = ->
     if confirm("Are you sure?")
@@ -41,17 +43,11 @@ TasksIndexCtrl = ($scope, Task) ->
       @task.destroy ->
         $scope.tasks = _.without($scope.tasks, original)
 
-  $scope.complete = ->
+  $scope.complete = (complete) ->
     original = @task
-    @task.complete ->
-      original.completed = true
+    @task.complete complete, ->
+      original.completed = complete
 
-  $scope.uncomplete = ->
-    original = @task
-    @task.uncomplete ->
-      # TODO change this with setting received task from server
-      original.completed = false
-        
 TasksIndexCtrl.$inject = ['$scope', 'Task'];
 
 TasksCreateCtrl = ($scope, $location, Task) ->

@@ -2,12 +2,12 @@ class TasksController < ApplicationController
   before_filter :authenticate_user!
 
   def up_down
-    @tasks = current_user.tasks.scoped.uncompleted.prioritized
+    @tasks = current_user.tasks.scoped.prioritized
     task_index = @tasks.index { |task| task.id == params[:id].to_i }
     @task = @tasks[task_index]
 
     if (task_index == 0 and params[:direction] == "up") or
-      (task_index == @tasks.size - 1 and params[:direction] = "down")
+      (task_index == @tasks.size - 1 and params[:direction] == "down")
       head :no_content
     else
       delta_direction = params[:direction] == "up" ? -1 : 1;

@@ -36,15 +36,10 @@ angular.module("tasks", ["ngResource"]).factory "Task", ['$resource', ($resource
     Task.remove
       id: @id
     , cb
-  Task::complete = (cb) ->
+  Task::complete = (complete, cb) ->
     Task.complete
       id: @id
-      completed: true
-    , cb
-  Task::uncomplete = (cb) ->
-    Task.update
-      id: @id
-      completed: false
+      completed: complete
     , cb
 
   Task

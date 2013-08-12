@@ -1,9 +1,9 @@
 .span6
   %h1 Tasks
   %ul.tasklist.nav
-    %li{"ng-repeat" => "task in tasks | filter:{completed: false} | orderBy:['priority']", "ng-mouseenter" => "showControls = true", "ng-mouseleave" => "showControls = false"}
-      %a.uncompleted{:href => "#", "ng-click" => "complete()"}
-        {{task.title}}
+    %li{"ng-repeat" => "task in tasks | orderBy:['priority']", "ng-mouseenter" => "showControls = true", "ng-mouseleave" => "showControls = false"}
+      %a{:href => "#", "ng-click" => "complete(!task.completed)", "ng-class" => "{true: 'completed', false: 'uncompleted'}[task.completed]"}
+        {{task.title}} ({{task.priority}})
       %span.controls{"ng-show" => "showControls"}
         %button.btn.btn-link.btn-mini{"ng-click" => "up(task)"}
           %i.icon-arrow-up{"inverts-icon-color-when-hovered" => true}
@@ -22,14 +22,14 @@
       %button.btn.btn-success{"ng-disabled" => "isClean() || newTask.$invalid"}
         %i.icon-plus.icon-white
         Add
-.span6
-  %h2 Finished tasks
-  %ul.tasklist.nav
-    %li{"ng-repeat" => "task in tasks | filter:{completed: true} | orderBy:['-completed_at']", "ng-mouseenter" => "showControls = true", "ng-mouseleave" => "showControls = false"}
-      %a.completed{:href => "#", "ng-click" => "uncomplete()"}
-        {{task.title}}
-      %span.controls{"ng-show" => "showControls"}
-        %a.btn.btn-mini{:href => "/tasks/{{task.id}}/edit"}
-          %i.icon-edit
-        %button.btn.btn-danger.btn-mini{"ng-click" => "destroy()"}
-          %i.icon-trash
+/ .span6
+/   %h2 Finished tasks
+/   %ul.tasklist.nav
+/     %li{"ng-repeat" => "task in tasks | filter:{completed: true} | orderBy:['-completed_at']", "ng-mouseenter" => "showControls = true", "ng-mouseleave" => "showControls = false"}
+/       %a.completed{:href => "#", "ng-click" => "uncomplete()"}
+/         {{task.title}}
+/       %span.controls{"ng-show" => "showControls"}
+/         %a.btn.btn-mini{:href => "/tasks/{{task.id}}/edit"}
+/           %i.icon-edit
+/         %button.btn.btn-danger.btn-mini{"ng-click" => "destroy()"}
+/           %i.icon-trash
