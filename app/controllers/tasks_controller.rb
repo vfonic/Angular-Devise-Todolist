@@ -8,7 +8,7 @@ class TasksController < ApplicationController
 
     if (task_index == 0 and params[:direction] == "up") or
       (task_index == @tasks.size - 1 and params[:direction] == "down")
-      head :no_content
+      render json: { error: "Trying to move the first task up or the last task down" }, status: :unprocessable_entity
     else
       delta_direction = params[:direction] == "up" ? -1 : 1;
       @higherTask = @tasks[task_index + delta_direction]
@@ -17,7 +17,7 @@ class TasksController < ApplicationController
         @higherTask.update_attribute(:priority, @task.priority)
         @task.update_attribute(:priority, priority)
       end
-      head :no_content
+      render json: @task, status: :ok
     end
   end
 

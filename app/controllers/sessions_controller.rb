@@ -3,10 +3,15 @@ class SessionsController < Devise::SessionsController
 
   def create
     warden.authenticate!(:scope => resource_name, :recall => "#{controller_path}#failure")
-    render :json => current_user.to_json
+    render :json => current_user.to_json, status: :ok
+  end
+
+  def destroy
+    current_user.authentication_token = nil
+    super
   end
 
   def failure
-    render :json => {:success => false, :errors => ["Login Failed"]}
+    render :json => {:success => false, :error => "Invalid username/password combination" }
   end
 end
