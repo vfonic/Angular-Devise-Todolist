@@ -1,4 +1,4 @@
-AngularFirst::Application.routes.draw do
+ToptalTodolist::Application.routes.draw do
 
   put "/tasks/:id/complete" => "tasks#complete"
   put "/tasks/:id/:direction" => "tasks#up_down"

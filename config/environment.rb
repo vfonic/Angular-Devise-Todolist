@@ -2,4 +2,4 @@
 require File.expand_path('../application', __FILE__)
 
 # Initialize the rails application
-AngularFirst::Application.initialize!
+ToptalTodolist::Application.initialize!

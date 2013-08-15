@@ -4,4 +4,4 @@
 
 require File.expand_path('../config/application', __FILE__)
 
-AngularFirst::Application.load_tasks
+ToptalTodolist::Application.load_tasks

@@ -7,7 +7,6 @@ class SessionsController < Devise::SessionsController
   end
 
   def destroy
-    current_user.authentication_token = nil
     super
   end
 
