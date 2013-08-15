@@ -1,4 +1,4 @@
-thisApp.controller 'UsersCtrl', ($scope, $http, $location, FlashService, $rootScope) ->
+thisApp.controller 'UsersCtrl', ($scope, $http, $location, $rootScope) ->
   $rootScope.current_user = JSON.parse($("meta[name='current_user']").attr('content'))
 
   $rootScope.authorized = ->
@@ -13,7 +13,7 @@ thisApp.controller 'UsersCtrl', ($scope, $http, $location, FlashService, $rootSc
       data: authData
     )
     .success (data) ->
-      $rootScope.current_user = data
+      $rootScope.current_user = data.current_user
       $("meta[name='current_user']").attr('content', JSON.stringify(data))
       $location.path "/"
     .error (data, status) ->
@@ -28,9 +28,7 @@ thisApp.controller 'UsersCtrl', ($scope, $http, $location, FlashService, $rootSc
       $("meta[name='current_user']").attr('content', "null")
       # explicitly redirect to /register in order to skip calling tasks#index for guest user
       $location.path "/register"
-      FlashService.show(data)
     .error (data, status) ->
-      FlashService.show("Error: #{status}.\n#{data}")
 
   $scope.register = ->
     registerData = {user: {name: $scope.name, email: $scope.email, password: $scope.password, password_confirmation: $scope.password}}
@@ -39,13 +37,7 @@ thisApp.controller 'UsersCtrl', ($scope, $http, $location, FlashService, $rootSc
       registerData
     )
     .success (data) ->
-      $rootScope.current_user = data
+      $rootScope.current_user = data.current_user
       $("meta[name='current_user']").attr('content', JSON.stringify(data))
       $location.path "/"
-      FlashService.show("Welcome!")
     .error (data) ->
-      errors = ""
-      $.each(data.errors, (index, value) ->
-          errors += index.substr(0,1).toUpperCase() + index.substr(1) + ' ' + value + '\n'
-      )
-      FlashService.show(errors)

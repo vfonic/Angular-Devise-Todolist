@@ -1,7 +1,4 @@
-root = global ? window
-angular = root.angular
-
-thisApp = angular.module("ToptalTodolist", ['ngResource', 'ngCookies', 'tasks']).config(['$routeProvider', '$locationProvider' , 
+thisApp.config(['$routeProvider', '$locationProvider' , 
 ($routeProvider, $locationProvider) ->
   $locationProvider.html5Mode true
   $routeProvider
@@ -25,14 +22,3 @@ thisApp = angular.module("ToptalTodolist", ['ngResource', 'ngCookies', 'tasks'])
     templateUrl: '<%= asset_path "tasks/edit.html" %>'
   ).otherwise redirectTo: "/tasks"
 ])
-
-thisApp.run(($rootScope, $location) ->
-  $rootScope.$on('$routeChangeStart', (event, next, current) ->
-    if ($location.path() != '/login' && $location.path() != '/register' && !$rootScope.authorized())
-      $location.path('/register')
-    else if (($location.path() == '/login' || $location.path() == '/register') && $rootScope.authorized())
-      $location.path('/')
-  )
-)
-
-root.thisApp = thisApp

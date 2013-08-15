@@ -3,7 +3,7 @@ class SessionsController < Devise::SessionsController
 
   def create
     warden.authenticate!(:scope => resource_name, :recall => "#{controller_path}#failure")
-    render :json => current_user.to_json, status: :ok
+    render :json => { current_user: current_user, message: "Welcome!"}, status: :ok
   end
 
   def destroy

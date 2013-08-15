@@ -16,5 +16,5 @@
 #= require ./angularjs/angular.min
 #= require_tree ./angularjs/
 #= require bootstrap
-#= require ./routes
+#= require ./init
 #= require_tree .

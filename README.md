@@ -18,5 +18,6 @@ The application was generated using Rails Apps Composer recipe.
 Rails 3.2.14, AngularJS 1.0.7 (stable), Postgres, CoffeeScript, SASS, HAML, Twitter Bootstrap
 
 The app contains REST API on /api/v1
+
 The demo is available at
 [http://toptal.herokuapp.com/](http://toptal.herokuapp.com/).

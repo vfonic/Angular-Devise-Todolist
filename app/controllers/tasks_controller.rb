@@ -17,7 +17,7 @@ class TasksController < ApplicationController
         @higherTask.update_attribute(:priority, @task.priority)
         @task.update_attribute(:priority, priority)
       end
-      render json: @task, status: :ok
+      render json: { task: @task, message: "Tasks updated" }, status: :ok
     end
   end
 
