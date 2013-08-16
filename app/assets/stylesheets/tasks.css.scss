@@ -4,6 +4,10 @@
 body { padding-top: 50px; }
 @import "bootstrap-responsive";
 
+.popover, .popover-title, .modal {
+  @include border-radius(0);
+}
+
 .select-mini {
     width: 100px;
 }

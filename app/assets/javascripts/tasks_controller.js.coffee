@@ -45,10 +45,12 @@ TasksIndexCtrl = ($scope, Task) ->
       swap($scope.tasks, indexOfTask, indexOfTask+1)
 
   $scope.destroy = ->
-    if confirm("Are you sure?")
-      original = @task
-      @task.destroy ->
-        $scope.tasks = _.without($scope.tasks, original)
+    original = @task
+    bootbox.confirm("Are you sure?", (response) ->
+      if response
+        original.destroy ->
+          $scope.tasks = _.without($scope.tasks, original)
+    )
 
   $scope.complete = (complete) ->
     original = @task
@@ -72,9 +74,11 @@ TasksShowCtrl = ($scope, $location, $routeParams, Task) ->
     $scope.task = new Task(@original)
 
   $scope.destroy = ->
-    if confirm("Are you sure?")
-      $scope.task.destroy ->
-        $location.path "/tasks"
+    bootbox.confirm("Are you sure?", (response) ->
+      if response
+        $scope.task.destroy ->
+          $location.path "/tasks"
+    )
 
 TasksShowCtrl.$inject = ['$scope', '$location', '$routeParams', 'Task'];
 
@@ -90,9 +94,11 @@ TasksEditCtrl = ($scope, $location, $routeParams, Task) ->
     angular.equals @original, $scope.task
 
   $scope.destroy = ->
-    if confirm("Are you sure?")
-      $scope.task.destroy ->
-        $location.path "/tasks"
+    bootbox.confirm("Are you sure?", (response) ->
+      if response
+        $scope.task.destroy ->
+          $location.path "/tasks"
+    )
 
   $scope.save = ->
     Task.update $scope.task, (data) ->
