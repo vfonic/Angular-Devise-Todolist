@@ -1,9 +1,10 @@
 .span6
   %h1 Tasks
-  %ul.tasklist.nav
-    %li{"ng-repeat" => "task in tasks | orderBy:['priority']", "ng-mouseenter" => "showControls = true", "ng-mouseleave" => "showControls = false"}
+  %ul.tasklist.nav{"ui-sortable" => "sortableOptions", "ng-model" => "tasks"}
+    %li{"ng-repeat" => "task in tasks", "ng-mouseenter" => "showControls = true", "ng-mouseleave" => "showControls = false"}
       %span.importance{"ng-class" => "task.importance"}
-      %a{:href => "#", "ng-click" => "complete(!task.completed)", "ng-class" => "{true: 'completed', false: 'uncompleted'}[task.completed]"}
+      %span.add-on{"ng-class" => "{true: 'completed', false: 'uncompleted'}[task.completed]", "ng-click" => "complete(!task.completed)"}
+      %a{:href => "/tasks/{{task.id}}", "ng-class" => "{true: 'completed', false: 'uncompleted'}[task.completed]"}
         {{task.title}}
       %span.controls{"ng-show" => "showControls"}
         %button.btn.btn-link.btn-mini{"ng-click" => "up(task)", title: "Move up"}

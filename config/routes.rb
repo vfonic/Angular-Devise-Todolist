@@ -1,6 +1,7 @@
 ToptalTodolist::Application.routes.draw do
 
   put "/tasks/:id/complete" => "tasks#complete"
+  put "/tasks/reorder" => "tasks#reorder"
   put "/tasks/:id/:direction" => "tasks#up_down"
   resources :tasks
 

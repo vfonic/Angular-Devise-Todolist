@@ -13,13 +13,13 @@ TasksIndexCtrl = ($scope, Task) ->
     {name: 'Yellow', value: 'yellow'}
     {name: 'Green', value: 'green'}
   ]
-  $scope.task = {"importance": "green"}
+  $scope.task = {"importance": "yellow"}
 
   $scope.save = ->
     Task.save @task, (data) ->
       $scope.tasks.push(new Task(data.task))
       $scope.task.title = ""
-      $scope.task.importance = "green"
+      $scope.task.importance = "yellow"
 
   $scope.up = ->
     indexOfTask = _.indexOf($scope.tasks, @task)
@@ -56,6 +56,16 @@ TasksIndexCtrl = ($scope, Task) ->
     original = @task
     @task.complete complete, ->
       original.completed = complete
+
+  $scope.sortableOptions = {
+    stop: (e, ui) ->
+        from = ui.item.sortable.index
+        to = ui.item.index()
+        Task.reorder {
+          source: from,
+          destination: to
+        }
+  }
 
 TasksIndexCtrl.$inject = ['$scope', 'Task'];
 

@@ -21,3 +21,4 @@ group :development do
 end
 
 gem 'font_awesome_rails', '0.0.4'
+gem 'jquery-ui-rails',  '4.0.4'

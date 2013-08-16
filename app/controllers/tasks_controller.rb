@@ -38,6 +38,26 @@ class TasksController < ApplicationController
     end
   end
 
+  def reorder
+    @tasks = current_user.tasks.scoped.prioritized
+    destination_task_index = params[:destination].to_i
+    index = params[:source].to_i
+    direction = destination_task_index < index ? -1 : 1
+    priority = @tasks[destination_task_index].priority.to_i
+    Task.transaction do
+      task = @tasks[index]
+      task.priority = priority
+      task.save
+      while index != destination_task_index
+        index = index + direction
+        task = @tasks[index]
+        task.priority = task.priority - direction
+        task.save
+      end
+    end
+    render json: { message: "Tasks updated" }, status: :ok
+  end
+
   def index
     @tasks = current_user.tasks.scoped.prioritized
 

@@ -57,15 +57,25 @@ body { padding-top: 50px; }
         }
         > a {
             margin: 0;
-            padding: 5px 5px 5px 15px;
+            padding: 5px 5px 5px 35px;
             display: block;
-            &.completed {
-                @include icon(check);
-            }
-            &.uncompleted {
-                @include icon(check-empty);
-            }
+            cursor: move;
         }
+    }
+}
+
+.add-on {
+    border-right: 1px dotted #888;
+    position: absolute;
+    top: 5px;
+    left: 8px;
+    cursor: pointer;
+    padding-right: 2px;
+    &.completed {
+        @include icon(check);
+    }
+    &.uncompleted {
+        @include icon(check-empty);
     }
 }
 
@@ -75,9 +85,9 @@ body { padding-top: 50px; }
     margin-right: 3px;
 }
 
-.completed,
-.completed:focus,
-.completed:active,
-.completed:hover {
+a.completed,
+a.completed:focus,
+a.completed:active,
+a.completed:hover {
     text-decoration: line-through !important;
 }
