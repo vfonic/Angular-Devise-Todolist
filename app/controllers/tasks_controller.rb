@@ -25,10 +25,12 @@ class TasksController < ApplicationController
     @task = current_user.tasks.find(params[:id])
     @task.completed = params[:completed]
 
+    message = @task.completed ? @task.title + " completed" : "Marked " + @task.title + " as not completed"
+
     respond_to do |format|
       if @task.save
         format.html { redirect_to @task, notice: 'Task was successfully updated.' }
-        format.json { render json: @task, status: :ok }
+        format.json { render json: { task: @task, message: message}, status: :ok }
       else
         format.html { render action: "edit" }
         format.json { render json: @task.errors, status: :unprocessable_entity }
@@ -76,7 +78,7 @@ class TasksController < ApplicationController
     respond_to do |format|
       if @task.save
         format.html { redirect_to @task, notice: 'Task was successfully created.' }
-        format.json { render json: @task, status: :created }
+        format.json { render json: { task: @task, message: "Task created"}, status: :created }
       else
         format.html { render action: "new" }
         format.json { render json: @task.errors, status: :unprocessable_entity }

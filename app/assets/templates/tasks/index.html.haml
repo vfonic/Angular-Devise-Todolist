@@ -3,7 +3,7 @@
   %ul.tasklist.nav
     %li{"ng-repeat" => "task in tasks | orderBy:['priority']", "ng-mouseenter" => "showControls = true", "ng-mouseleave" => "showControls = false"}
       %a{:href => "#", "ng-click" => "complete(!task.completed)", "ng-class" => "{true: 'completed', false: 'uncompleted'}[task.completed]"}
-        {{task.title}} ({{task.priority}})
+        {{task.title}}
       %span.controls{"ng-show" => "showControls"}
         %button.btn.btn-link.btn-mini{"ng-click" => "up(task)"}
           %i.icon-arrow-up{"inverts-icon-color-when-hovered" => true}

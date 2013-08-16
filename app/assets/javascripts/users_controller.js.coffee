@@ -1,4 +1,4 @@
-thisApp.controller 'UsersCtrl', ($scope, $http, $location, $rootScope) ->
+thisApp.controller 'UsersCtrl', ($scope, $http, $location, FlashService, $rootScope) ->
   $rootScope.current_user = JSON.parse($("meta[name='current_user']").attr('content'))
 
   $rootScope.authorized = ->
@@ -16,6 +16,7 @@ thisApp.controller 'UsersCtrl', ($scope, $http, $location, $rootScope) ->
       $rootScope.current_user = data.current_user
       $("meta[name='current_user']").attr('content', JSON.stringify(data))
       $location.path "/"
+      FlashService.show(data.message)
     .error (data, status) ->
 
   $scope.logout = ->
@@ -27,7 +28,8 @@ thisApp.controller 'UsersCtrl', ($scope, $http, $location, $rootScope) ->
       $rootScope.current_user = null
       $("meta[name='current_user']").attr('content', "null")
       # explicitly redirect to /register in order to skip calling tasks#index for guest user
-      $location.path "/register"
+      $location.path "/login"
+      FlashService.clear()
     .error (data, status) ->
 
   $scope.register = ->

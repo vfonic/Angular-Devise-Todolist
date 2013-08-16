@@ -4,6 +4,16 @@
 body { padding-top: 50px; }
 @import "bootstrap-responsive";
 
+.alert {
+    position: absolute;
+    width: 480px;
+    padding-top: -50px;
+}
+
+.span12.view {
+    padding-top: 50px;
+}
+
 .tasklist {
     width: 320px;
     li {

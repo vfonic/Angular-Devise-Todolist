@@ -10,8 +10,8 @@ TasksIndexCtrl = ($scope, Task) ->
   $scope.tasks = Task.query()
 
   $scope.save = ->
-    Task.save @task, (task) ->
-      $scope.tasks.push(task)
+    Task.save @task, (data) ->
+      $scope.tasks.push(new Task(data.task))
       $scope.task.title = ""
 
   $scope.up = ->
@@ -52,7 +52,7 @@ TasksIndexCtrl.$inject = ['$scope', 'Task'];
 
 TasksCreateCtrl = ($scope, $location, Task) ->
   $scope.save = ->
-    Task.save $scope.task, (task) ->
+    Task.save $scope.task, (data) ->
       $location.path "/tasks"
 
 TasksCreateCtrl.$inject = ['$scope', '$location', 'Task'];
@@ -88,7 +88,7 @@ TasksEditCtrl = ($scope, $location, $routeParams, Task) ->
         $location.path "/tasks"
 
   $scope.save = ->
-    Task.update $scope.task, (task) ->
+    Task.update $scope.task, (data) ->
       $location.path "/tasks"
 
 TasksEditCtrl.$inject = ['$scope', '$location', '$routeParams', 'Task'];

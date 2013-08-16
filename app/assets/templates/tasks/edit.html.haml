@@ -9,13 +9,6 @@
         %input.text_field{:name => "task[title]", "ng-model" => "task.title", :required => "", :type => "text"}
         %span.help-inline{"ng-show" => "editTask.title.$error.required"}
           Required
-    .control-group
-      %label.control-label
-        Priority
-      .controls
-        %input.number_field{:name => "task[priority]", "ng-model" => "task.priority", :required => "", :type => "number"}
-        %span.help-inline{"ng-show" => "editTask.priority.$error.required"}
-          Required
     .form-actions
       %button.btn.btn-success{"ng-click" => "save()", "ng-disabled" => "isClean() || editTask.$invalid"}
         Save
