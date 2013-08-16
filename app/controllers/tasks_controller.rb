@@ -88,11 +88,13 @@ class TasksController < ApplicationController
 
   def update
     @task = current_user.tasks.find(params[:id])
+    @task.title = params[:title]
+    @task.importance = params[:importance]
 
     respond_to do |format|
-      if @task.update_attributes(params[:task])
+      if @task.save
         format.html { redirect_to @task, notice: 'Task was successfully updated.' }
-        format.json { head :no_content }
+        format.json { render json: { task: @task, message: 'Task was successfully updated.'}, status: :ok }
       else
         format.html { render action: "edit" }
         format.json { render json: @task.errors, status: :unprocessable_entity }

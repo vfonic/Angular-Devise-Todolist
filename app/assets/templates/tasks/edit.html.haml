@@ -9,11 +9,19 @@
         %input.text_field{:name => "task[title]", "ng-model" => "task.title", :required => "", :type => "text"}
         %span.help-inline{"ng-show" => "editTask.title.$error.required"}
           Required
+    .control-group
+      %label.control-label
+        Importance
+      .controls
+        %select{:name => 'task[importance]', "ng-model" => "task.importance"}
+          %option{:value => 'red'} Red
+          %option{:value => 'yellow'} Yellow
+          %option{:value => 'green'} Green
     .form-actions
       %button.btn.btn-success{"ng-click" => "save()", "ng-disabled" => "isClean() || editTask.$invalid"}
         Save
       %button.btn.btn-danger{"ng-click" => "destroy()", "ng-show" => "task.id"}
-        %i.icon-trash>
+        %i.icon-trash
         Delete
       %a.btn{:href => "/tasks"}
         Back to tasks

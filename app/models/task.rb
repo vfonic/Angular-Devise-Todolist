@@ -25,6 +25,7 @@ class Task < ActiveRecord::Base
       id: id,
       title: title,
       priority: priority,
+      importance: importance,
       completed: completed,
       completed_at: completed_at,
       created_at: created_at,
