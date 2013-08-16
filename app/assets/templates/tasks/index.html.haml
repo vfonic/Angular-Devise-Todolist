@@ -5,13 +5,13 @@
       %a{:href => "#", "ng-click" => "complete(!task.completed)", "ng-class" => "{true: 'completed', false: 'uncompleted'}[task.completed]"}
         {{task.title}}
       %span.controls{"ng-show" => "showControls"}
-        %button.btn.btn-link.btn-mini{"ng-click" => "up(task)"}
+        %button.btn.btn-link.btn-mini{"ng-click" => "up(task)", title: "Increase priority"}
           %i.icon-arrow-up{"inverts-icon-color-when-hovered" => true}
-        %button.btn.btn-link.btn-mini{"ng-click" => "down(task)"}
+        %button.btn.btn-link.btn-mini{"ng-click" => "down(task)", title: "Decrease priority"}
           %i.icon-arrow-down{"inverts-icon-color-when-hovered" => true}
-        %a.btn.btn-mini{:href => "/tasks/{{task.id}}/edit"}
+        %a.btn.btn-mini{:href => "/tasks/{{task.id}}/edit", title: "Edit task"}
           %i.icon-edit
-        %button.btn.btn-danger.btn-mini{"ng-click" => "destroy()"}
+        %button.btn.btn-danger.btn-mini{"ng-click" => "destroy()", title: "Delete task"}
           %i.icon-trash
 
   %form{:name => "newTask", class: "form-horizontal", "ng-submit" => "save()"}
