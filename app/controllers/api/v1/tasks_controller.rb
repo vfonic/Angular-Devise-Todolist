@@ -17,7 +17,7 @@ class Api::V1::TasksController < Api::V1::BaseApiController
         @higherTask.update_attribute(:priority, @task.priority)
         @task.update_attribute(:priority, priority)
       end
-      render json: @task, status: :ok
+      render json: { task: @task, message: "Tasks updated" }, status: :ok
     end
   end
 
@@ -25,16 +25,43 @@ class Api::V1::TasksController < Api::V1::BaseApiController
     @task = current_user.tasks.find(params[:id])
     @task.completed = params[:completed]
 
+    message = @task.completed ? @task.title + " completed" : "Marked " + @task.title + " as not completed"
+
     if @task.save
-      render json: @task, status: :ok
+      render json: { task: @task, message: message}, status: :ok
     else
       render json: @task.errors, status: :unprocessable_entity
     end
   end
 
+  def reorder
+    @tasks = current_user.tasks.scoped.prioritized
+    destination_task_index = params[:destination].to_i
+    index = params[:source].to_i
+    direction = destination_task_index < index ? -1 : 1
+    priority = @tasks[destination_task_index].priority.to_i
+    Task.transaction do
+      task = @tasks[index]
+      task.priority = priority
+      task.save
+      while index != destination_task_index
+        index = index + direction
+        task = @tasks[index]
+        task.priority = task.priority - direction
+        task.save
+      end
+    end
+    render json: { message: "Tasks updated" }, status: :ok
+  end
+
+  def clear_completed
+    @tasks = current_user.tasks.scoped.prioritized.where("completed_at IS NOT NULL")
+    @tasks.destroy_all
+    render json: { message: "Cleared completed tasks" }, status: :ok
+  end
+
   def index
     @tasks = current_user.tasks.scoped.prioritized
-
     render json: @tasks
   end
 
@@ -46,10 +73,11 @@ class Api::V1::TasksController < Api::V1::BaseApiController
   def create
     @task = Task.new(params[:task])
     @task.user = current_user
-    @task.priority = Task.maximum(:id).next
+    @task.priority = (Task.maximum(:id) || 0) + 1
+    @task.importance = params[:importance]
 
     if @task.save
-      render json: @task, status: :created
+      render json: { task: @task, message: "Task created"}, status: :created
     else
       render json: @task.errors, status: :unprocessable_entity
     end
@@ -57,9 +85,11 @@ class Api::V1::TasksController < Api::V1::BaseApiController
 
   def update
     @task = current_user.tasks.find(params[:id])
+    @task.title = params[:title]
+    @task.importance = params[:importance]
 
-    if @task.update_attributes(params[:task])
-      render json: @task, status: :ok
+    if @task.save
+      render json: { task: @task, message: 'Task was successfully updated.'}, status: :ok
     else
       render json: @task.errors, status: :unprocessable_entity
     end

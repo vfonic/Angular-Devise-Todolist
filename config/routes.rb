@@ -16,8 +16,10 @@ ToptalTodolist::Application.routes.draw do
 
   namespace :api, :defaults => { :format => 'json' } do
     namespace :v1 do
-      put "/tasks/:id/complete" => "tasks#complete"
-      put "/tasks/:id/:direction" => "tasks#up_down"
+        put "/tasks/clear_completed" => "tasks#clear_completed"
+        put "/tasks/:id/complete" => "tasks#complete"
+        put "/tasks/reorder" => "tasks#reorder"
+        put "/tasks/:id/:direction" => "tasks#up_down"
       resources :tasks
     end
   end
