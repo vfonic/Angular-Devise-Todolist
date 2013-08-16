@@ -27,6 +27,10 @@ angular.module("tasks", ["ngResource"]).factory "Task", ['$resource', ($resource
       method: "PUT"
       params:
         action: "reorder"
+    clear_completed:
+      method: "PUT"
+      params:
+        action: "clear_completed"
   )
   Task::up = (cb) ->
     Task.up
@@ -49,6 +53,8 @@ angular.module("tasks", ["ngResource"]).factory "Task", ['$resource', ($resource
     Task.reorder
       source: params.source
       destination: params.destination
+  Task::clear_completed = (cb) ->
+    Task.clear_completed cb
 
   Task
 ]

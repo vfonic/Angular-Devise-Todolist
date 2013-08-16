@@ -15,8 +15,10 @@
           %i.icon-edit
         %button.btn.btn-danger.btn-mini{"ng-click" => "destroy()", title: "Delete task"}
           %i.icon-trash
-
+  %buttton.btn.btn-danger{"ng-click" => "clear_completed()"}
+    Clear completed
   %form{:name => "newTask", class: "form-horizontal", "ng-submit" => "save()"}
+    %br
     %input.text_field{:name => "task[title]", "ng-model" => "task.title", :required => "", :type => "text"}
     %span.help-inline{"ng-show" => "newTask.title.$error.required"}
       Required

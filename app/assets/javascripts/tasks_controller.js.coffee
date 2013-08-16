@@ -67,6 +67,15 @@ TasksIndexCtrl = ($scope, Task) ->
         }
   }
 
+  $scope.clear_completed = ->
+    bootbox.confirm("Are you sure you want to permanently remove completed tasks?", (response) ->
+      if response
+        Task.clear_completed ->
+          $scope.tasks = _.filter($scope.tasks, (task) ->
+              return !task.completed
+          )
+    )
+
 TasksIndexCtrl.$inject = ['$scope', 'Task'];
 
 TasksCreateCtrl = ($scope, $location, Task) ->

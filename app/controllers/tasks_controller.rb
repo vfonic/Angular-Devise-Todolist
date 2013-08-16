@@ -58,6 +58,12 @@ class TasksController < ApplicationController
     render json: { message: "Tasks updated" }, status: :ok
   end
 
+  def clear_completed
+    @tasks = current_user.tasks.scoped.prioritized.where("completed_at IS NOT NULL")
+    @tasks.destroy_all
+    render json: { message: "Cleared completed tasks" }, status: :ok
+  end
+
   def index
     @tasks = current_user.tasks.scoped.prioritized
 
