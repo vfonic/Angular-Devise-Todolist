@@ -16,11 +16,11 @@ ActiveRecord::Schema.define(:version => 20130816010544) do
   create_table "tasks", :force => true do |t|
     t.string   "title"
     t.integer  "priority"
-    t.datetime "created_at",   :null => false
-    t.datetime "updated_at",   :null => false
+    t.datetime "created_at",                         :null => false
+    t.datetime "updated_at",                         :null => false
     t.integer  "user_id"
     t.datetime "completed_at"
-    t.string   "importance"
+    t.string   "importance",   :default => "yellow"
   end
 
   add_index "tasks", ["priority"], :name => "index_tasks_on_priority"
