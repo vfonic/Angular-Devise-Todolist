@@ -4,6 +4,10 @@
 body { padding-top: 50px; }
 @import "bootstrap-responsive";
 
+.select-mini {
+    width: 100px;
+}
+
 .alert {
     position: absolute;
     width: 480px;

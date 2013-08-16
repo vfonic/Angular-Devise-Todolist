@@ -1,7 +1,6 @@
 class Task < ActiveRecord::Base
   attr_accessible :priority, :title, :user_id, :completed_at, :completed
 
-  # TODO show error message when field empty
   validates_presence_of :title
 
   scope :prioritized, order("priority")

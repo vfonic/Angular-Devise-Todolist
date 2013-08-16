@@ -16,13 +16,13 @@
           %i.icon-trash
 
   %form{:name => "newTask", class: "form-horizontal", "ng-submit" => "save()"}
-    %fieldset
-      %input.text_field{:name => "task[title]", "ng-model" => "task.title", :required => "", :type => "text"}
-      %span.help-inline{"ng-show" => "newTask.title.$error.required"}
-        Required
-      %button.btn.btn-success{"ng-disabled" => "isClean() || newTask.$invalid"}
-        %i.icon-plus.icon-white
-        Add
+    %input.text_field{:name => "task[title]", "ng-model" => "task.title", :required => "", :type => "text"}
+    %span.help-inline{"ng-show" => "newTask.title.$error.required"}
+      Required
+    %select.select-mini{"ng-model" => "task.importance", "ng-options" => "c.value as c.name for c in colors"}
+    %button.btn.btn-success{"ng-disabled" => "isClean() || newTask.$invalid"}
+      %i.icon-plus.icon-white
+      Add
 / .span6
 /   %h2 Finished tasks
 /   %ul.tasklist.nav

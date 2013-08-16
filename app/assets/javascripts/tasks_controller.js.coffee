@@ -8,11 +8,18 @@ swap = (array, first_index, second_index) ->
 
 TasksIndexCtrl = ($scope, Task) ->
   $scope.tasks = Task.query()
+  $scope.colors = [
+    {name: 'Red', value: 'red'}
+    {name: 'Yellow', value: 'yellow'}
+    {name: 'Green', value: 'green'}
+  ]
+  $scope.task = {"importance": "green"}
 
   $scope.save = ->
     Task.save @task, (data) ->
       $scope.tasks.push(new Task(data.task))
       $scope.task.title = ""
+      $scope.task.importance = "green"
 
   $scope.up = ->
     indexOfTask = _.indexOf($scope.tasks, @task)
