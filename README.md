@@ -1,8 +1,6 @@
 # Toptal Todolist
 
-This is a simple todolist application developed for the Toptal screening interview process.
-
-Here's the full task description:
+This is a simple todolist application with the following requirements:
 
 * I can register and log in
 * I can have my todo list displayed
