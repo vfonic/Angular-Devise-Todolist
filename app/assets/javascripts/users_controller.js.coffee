@@ -39,7 +39,7 @@ thisApp.controller 'UsersCtrl', ($scope, $http, $location, FlashService, $rootSc
       registerData
     )
     .success (data) ->
-      $rootScope.current_user = data.current_user
+      $rootScope.current_user = data
       $("meta[name='current_user']").attr('content', JSON.stringify(data))
       $location.path "/"
     .error (data) ->
