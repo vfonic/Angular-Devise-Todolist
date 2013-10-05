@@ -1,9 +1,9 @@
 !!!
-%html{:lang => "en", "ng-app" => "ToptalTodolist"}
+%html{:lang => "en", "ng-app" => "Todolist"}
   %head
     %meta{:charset => "utf-8"}
     %meta{:content => "width=device-width, initial-scale=1.0", :name => "viewport"}
-    %title= content_for?(:title) ? yield(:title) : "Toptal Todolist"
+    %title= content_for?(:title) ? yield(:title) : "Todolist"
     = csrf_meta_tags
     %meta{name: :current_user, content: current_user.to_json}
     / Le HTML5 shim, for IE6-8 support of HTML elements

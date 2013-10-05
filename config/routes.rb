@@ -1,4 +1,4 @@
-ToptalTodolist::Application.routes.draw do
+Todolist::Application.routes.draw do
 
   put "/tasks/clear_completed" => "tasks#clear_completed"
   put "/tasks/:id/complete" => "tasks#complete"

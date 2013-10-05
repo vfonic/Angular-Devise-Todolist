@@ -1,7 +1,7 @@
 root = global ? window
 angular = root.angular
 
-thisApp = angular.module("ToptalTodolist", ['ngResource', 'ngCookies', 'tasks', 'spinner', 'ui.sortable'])
+thisApp = angular.module("Todolist", ['ngResource', 'ngCookies', 'tasks', 'spinner', 'ui.sortable'])
 thisApp.run(($rootScope, $location, FlashService) ->
   $rootScope.$on('$routeChangeStart', (event, next, current) ->
     if ($location.path() != '/login' && $location.path() != '/register' && !$rootScope.authorized())

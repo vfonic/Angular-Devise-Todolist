@@ -4,4 +4,4 @@
 
 require File.expand_path('../config/application', __FILE__)
 
-ToptalTodolist::Application.load_tasks
+Todolist::Application.load_tasks
