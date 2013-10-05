@@ -1,5 +1,14 @@
 class TasksController < ApplicationController
   before_filter :authenticate_user!
+  before_filter :check_valid_id, only: [:complete, :show, :update]
+
+  def check_valid_id
+    begin
+      current_user.tasks.find(params[:id])
+    rescue ActiveRecord::RecordNotFound
+      render json: { message: "Task not found" }, status: 404
+    end
+  end
 
   def up_down
     @tasks = current_user.tasks.scoped.prioritized
@@ -74,7 +83,7 @@ class TasksController < ApplicationController
   end
 
   def show
-    @task = current_user.tasks.find(params[:id])
+    @task = current_user.tasks.where(id: params[:id])
 
     respond_to do |format|
       format.html { render nothing: true, layout: true }
